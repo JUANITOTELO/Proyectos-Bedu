@@ -1,0 +1,72 @@
+<apex:page id="page" lightningStyleSheets="true" standardController="Quote" extensions="BuscarProductoControllerExtension" docType="html-5.0">
+    
+    <!-- Busqueda -->
+    <div style="padding: 50px;" id="busquedaPadding">
+        <div style="display: flex;
+                    justify-content: center;" id="busquedaCenter">
+            <apex:pageBlock title="Buscar un producto" id="buscarPage">
+                <!-- Errores de Busqueda-->
+                <apex:outputPanel rendered="{!ShowSearchError}">
+                    <div style="padding: 10px;">
+                        <apex:pageMessages id="searchError" />
+                    </div>
+                </apex:outputPanel>   
+                <!-- Barra de busqueda -->
+                
+                <apex:form id="busquedaForm">
+                    Código de Producto: 
+                    <apex:inputText id="Busqueda" value="{!valorBusqueda}"/> 
+                    <apex:commandButton value="Buscar" action="{!SearchProduct}"/>
+                </apex:form>
+                
+            </apex:pageBlock>
+        </div>
+    </div>
+    
+    <!-- Producto -->
+    <apex:form >
+        <div style="justify-content: center;">
+            <apex:pageBlock title="Detalles del Producto" rendered="{!showProduct}" >
+                <apex:pageBlockTable value="{! valor  }" var="re">
+                    <apex:column >
+                        <apex:facet name="header">NOMBRE DEL PRODUCTO</apex:facet>
+                        <apex:outputText value="{!re.name}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">PRECIO DE LISTA</apex:facet>
+                        <apex:outputText value="$ {!re.Unitp}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">ID EXTERNO</apex:facet>
+                        <apex:outputText value="{!re.externalcode}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">APARTADO</apex:facet>
+                        
+                        <apex:input type="number" value="{!re.apart}"/>
+                        
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">DISPONIBLE</apex:facet>
+                        <apex:outputText value="{!re.dis}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+                
+                <!-- Errores de Actualización de datos -->
+                <apex:outputPanel rendered="{!ShowUpdateError}">
+                    <div style="padding: 10px;">
+                        <apex:pageMessages id="updateError" />
+                    </div>
+                </apex:outputPanel>  
+                <div style="padding: 1%;">
+                    
+                    <apex:commandButton immediate="true" action="{!doReturn}" value="Atras"/>
+                    <apex:commandButton immediate="true" action="{!doCancel}" style="background-color:#BA0517; color:#FFFFFF;" value="Cancelar"/>
+                    <apex:commandButton action="{!doSave}" style="background-color:#45C65A; color:#080707;" value="Guardar"/>
+                    
+                </div>
+            </apex:pageBlock>
+        </div>
+    </apex:form>
+    
+</apex:page>

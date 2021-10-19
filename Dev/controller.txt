@@ -1,0 +1,21 @@
+public class PrStylingController {
+	private Boolean showProduct = false;
+    private Boolean showError = false;
+    public String valorBusqueda {get; set;}
+    
+    public Boolean getShowProduct(){
+        return showProduct;
+    }
+    
+    public Boolean getShowError(){
+        return showError;
+    }
+    
+    public List<Product2> searchProduct(){
+        String query = 'SELECT N';
+        List<Product2> output = Database.query(query);
+        
+        return output;
+    }
+    
+}
