@@ -1,8 +1,8 @@
 public class ActualizarInventario {
     public ActualizarInventario(List<Quote> newTrgQuote, List<Quote> oldTrgQuote){
         for(Quote oldQuote : oldTrgQuote){
-            if(oldQuote.LineItemCount > 0){
-                for(Quote newQuote : newTrgQuote){
+            for(Quote newQuote : newTrgQuote){
+                if(oldQuote.LineItemCount > 0){
                     if(newQuote.Status == 'Approved' || newQuote.Status == 'Accepted'){
                         List<QuoteLineItem> Items = [SELECT Id, Quantity, Product2Id
                                                      FROM QuoteLineItem 
@@ -41,8 +41,12 @@ public class ActualizarInventario {
                         upsert nInv;
                     }
                 }
-            }else{
-                newTrgQuote[0].addError('La cotización no tiene productos');   
+                else if(oldQuote.LineItemCount == 0 && newQuote.LineItemCount >= 1){
+                    continue;   
+                }
+                else{
+                    newTrgQuote[0].addError('La cotización no tiene '+ newQuote.LineItemCount + 'productos.');   
+                }
             }
         }
     }

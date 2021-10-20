@@ -1,12 +1,15 @@
 public class InventarioRestQuery {
-    public static List<Inventario__c> geetExternalInventary(){
-        List<Inventario__c> output = new List<Inventario__c>();
+    public static HttpResponse getResponse(){
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('https://64bjp0q5wg.execute-api.us-east-2.amazonaws.com/Implement/');
         request.setMethod('GET');
-        HttpResponse response = http.send(request);
-        
+        HttpResponse res = http.send(request);
+        return res;
+    }
+    
+    public static List<Inventario__c> geetExternalInventary(HTTPResponse response){
+        List<Inventario__c> output = new List<Inventario__c>();
         InventaryResponseClass Inventary = InventaryResponseClass.parse(response.getBody());
         if(response.getStatusCode() == 200){
             for(InventaryResponseClass.Inventory inv : Inventary.Body.Inventory){
