@@ -19,6 +19,7 @@ public class ActualizarInventario {
                             }
                         }
                         
+                        List<Inventario__c> nInv = new List<Inventario__c>();
                         Integer counter = 0;
                         for(Product2 p : pro){
                             
@@ -32,11 +33,12 @@ public class ActualizarInventario {
                                     Id = i.Id, 
                                     Cantidad_dis__c = i.Cantidad_dis__c - quantities[counter]
                                 );
-                                upsert temp;
+                                nInv.add(temp);
                                 
                             } 
                             counter += 1;
-                        }  
+                        }
+                        upsert nInv;
                     }
                 }
             }else{
