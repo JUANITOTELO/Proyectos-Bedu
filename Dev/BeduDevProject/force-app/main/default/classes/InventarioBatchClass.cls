@@ -1,6 +1,6 @@
 public class InventarioBatchClass implements
 Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful, HttpCalloutMock {
-    // instance member to retain state across transactions
+   
     public Integer recordsProcessed = 0;
     public HTTPResponse respond(HTTPRequest req) {
         return InventarioRestQuery.getResponse();
@@ -19,8 +19,5 @@ Database.Batchable<sObject>, Database.AllowsCallouts, Database.Stateful, HttpCal
                             TotalJobItems, CreatedBy.Email
                             FROM AsyncApexJob
                             WHERE Id =: bc.getJobId()];
-        // call some utility to send email
-        // EmailUtils.sendMessage(job, recordsProcessed);
-        // Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
     }
 }
